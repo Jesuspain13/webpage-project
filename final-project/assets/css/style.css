@@ -1,0 +1,7 @@
+#comment {
+	transition: height 0.5s ease-in-out,
+}
+
+#comment:hover {
+	height: 200%;
+}
