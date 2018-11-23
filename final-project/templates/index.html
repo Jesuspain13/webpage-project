@@ -66,31 +66,21 @@
 		<table class="table table-striped responsive">
             <thead>
                 <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">Finished</th>
+                    <th scope="col">Project Name</th>
+                    <th scope="col">Code</th>
+                    <th scope="col">Start_date</th>
+                    <th scope="col">Status</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>a</td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                </tr>
+                {% for message in messages %}
+                    <tr>
+                        <td> <a href="/info/{{ message.key.id() }}"> {{message.name}}</a> </td>
+                        <td> {{message.code}} </td>
+                        <td> {{message.start_date}} </td>
+                        <td> {{message.status}} </td>
+                    </tr>
+                {% endfor %}
             </tbody>
 		</table>
 	</div>

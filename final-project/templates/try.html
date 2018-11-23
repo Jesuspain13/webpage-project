@@ -5,12 +5,14 @@
     <title>try</title>
 </head>
 <body>
-    <ul>
-        {% for message in messages %}
-        <li>
-            <a href="#"> {{message.name}}, {{ message.expediente }}, {{ message.start_date }}, {{ message.status }}</a>
-        </li>
-        {% endfor %}
-    </ul>
+    <p>
+        {{ id.name }} <br>
+        {{ id.expediente }} <br>
+        {{ id.code }} <br>
+        {{ id.start_date }} <br>
+        {{ id.place }} <br>
+        {{ id.status }} <br>
+        {{ id.comments }}
+    </p>
 </body>
 </html>

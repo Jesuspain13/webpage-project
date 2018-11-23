@@ -4,7 +4,6 @@
 import os
 import webapp2
 import jinja2
-from project_class import Project
 from column_models import Save
 
 
@@ -26,8 +25,12 @@ class BaseHandler(webapp2.RequestHandler):
 
 
 class MainHandler(BaseHandler):
+    # con este get recibimos los proyectos de la DB y los mostramos en el INDEX.HTML
     def get(self):
-        params = {}
+        db = Save.query().order(Save.start_date).fetch()
+        params = {
+            "messages": db
+        }
         return self.render_template("index.html", params)
 
     def post(self):
@@ -45,16 +48,16 @@ class MainHandler(BaseHandler):
         return self.render_template("index.html", params)
 
 
-class ProjectListHandler(BaseHandler):
-    def get(self):
-        db = Save.query().order(Save.start_date).fetch()
+class ProjectInfoHandler(BaseHandler):
+    def get(self, message_id):
+        project_selected = Save.get_by_id(int(message_id))
         params = {
-            "messages": db
+            "id": project_selected
         }
         return self.render_template("try.html", params)
 
 
 app = webapp2.WSGIApplication([
     webapp2.Route('/', MainHandler),
-    webapp2.Route('/projects', ProjectListHandler)], debug=True)
+    webapp2.Route('/info/<message_id:\d+>', ProjectInfoHandler)], debug=True)
 
