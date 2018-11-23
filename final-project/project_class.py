@@ -13,3 +13,5 @@ class Project(object):
 
     def modify_content(self):
         pass
+
+# Ahora mismo esta clase no nos sirve. DIA 23/11

@@ -5,6 +5,7 @@ import os
 import webapp2
 import jinja2
 from project_class import Project
+from column_models import Save
 
 
 current_path = os.path.dirname(__file__)
@@ -38,12 +39,22 @@ class MainHandler(BaseHandler):
         place = self.request.get("place")
         status = self.request.get("status")
         comments = self.request.get("comments")
-        project = Project(expediente, start_date, code, name, place, status, comments)
-        print str(project)
-        params = {"message" : "El proyecto ha sido guardado"}
+        saved = Save(expediente=expediente, code=code, name=name, place=place, status=status, comments=comments)
+        saved.put()
+        params = {"message": "El proyecto ha sido guardado"}
         return self.render_template("index.html", params)
 
 
+class ProjectListHandler(BaseHandler):
+    def get(self):
+        db = Save.query().order(Save.start_date).fetch()
+        params = {
+            "messages": db
+        }
+        return self.render_template("try.html", params)
+
+
 app = webapp2.WSGIApplication([
-    webapp2.Route('/', MainHandler)], debug=True)
+    webapp2.Route('/', MainHandler),
+    webapp2.Route('/projects', ProjectListHandler)], debug=True)
 
