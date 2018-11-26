@@ -10,14 +10,14 @@
   		<div class="collapse navbar-collapse row justify-content-md-center" id="navbarNavAltMarkup">
     		<div class="navbar-nav col-9 justify-content-md-center">
 		      <a class="nav-item nav-link active" href="/">Lista de Proyectos </a>
-		      <a class="nav-item nav-link active" href="/info" target="_blank">Información</a>
+		      <a class="nav-item nav-link active" href="/info">Información</a>
 		      <a class="nav-item nav-link active" href="/info">Cambiar Projecto</a>
 		    </div>
 		</div>
 	</nav>
 
     <p>
-        {{ project.name }} <br>
+        You have select: {{ project.name }} <br>
         {{ project.expediente }} <br>
         {{ project.code }} <br>
         {{ project.start_date }} <br>
@@ -28,7 +28,11 @@
     </p>
     <form method="get" action="/changeproject/{{ project.key.id() }}/edit">
         <p> Click here if you want to change this project </p>
-        <button type="submit"></button>
+        <button type="submit">Change</button>
+    </form>
+    <form method="post" action="/info/{{ project.key.id() }}">
+        <p> Click here if you want to delete this project </p>
+        <button type="submit">Delete</button>
     </form>
 </body>
 </html>

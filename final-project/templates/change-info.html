@@ -12,8 +12,8 @@
   		<div class="collapse navbar-collapse row justify-content-md-center" id="navbarNavAltMarkup">
     		<div class="navbar-nav col-9 justify-content-md-center">
 		      <a class="nav-item nav-link active" href="/">Lista de Proyectos </a>
-		      <a class="nav-item nav-link active" href="/info" target="_blank">Información</a>
-		      <a class="nav-item nav-link active" href="#">Cambiar Projecto</a>
+		      <a class="nav-item nav-link active" href="/info">Información</a>
+		      <a class="nav-item nav-link active" href="/info">Cambiar Projecto</a>
 		    </div>
 		</div>
 	</nav>
@@ -23,19 +23,21 @@
 		<form method="post" action="/changeproject/{{ project.key.id() }}/edit">
 			<div class="row">
 				<div class="col">
-					<input type="text" class="form-control" name="expediente" placeholder="Número expediente ({{project.expediente}})">
+                    <p>Expediente</p>
+					<input type="text" class="form-control" name="expediente" value="{{project.expediente}}" placeholder="Número expediente">
 				</div>
                 <!-- Lo dejo comentado por si queremos ponerlo. Ahora mismo está para que se añada automáticamente
 				<div class="col">
 					<input type="text" class="form-control" name="start_date" placeholder="Fecha de inicio">
 		    	</div>-->
 		   	 	<div class="col">
-		      		<input type="text" class="form-control" name="code" placeholder="Código ({{project.code}})">
+                    <p>Código</p>
+		      		<input type="text" class="form-control" name="code" value="{{project.code}}" placeholder="Código">
 		    	</div>
 		   	</div>
 			<div class="row mt-3 mb-3">
 		    	<div class="col">
-		      		<input type="text" class="form-control" name="place" placeholder="Lugar ({{project.place}})">
+		      		<input type="text" class="form-control" name="place" value="{{project.place}}" placeholder="Lugar">
 		    	</div>
 		    	<div class="col">
 		      		<select class="form-control" name="status">
@@ -46,7 +48,7 @@
 		  	</div>
 		  	<div class="row mt-3 mb-3">
 		    	<div class="col">
-		      		<input id="comment" type="text" class="form-control" name="comments" placeholder="Comentario ({{project.comments}})">
+		      		<input id="comment" type="text" class="form-control" name="comments" value="{{project.comments}}" placeholder="Comentario ({{project.comments}})">
 		    	</div>
 		  	</div>
 		  	<button type="submit">Guardar proyecto</button>
