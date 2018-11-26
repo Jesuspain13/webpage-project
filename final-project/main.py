@@ -4,7 +4,8 @@
 import os
 import webapp2
 import jinja2
-from column_models import Save
+from packages.column_models import Save
+from packages.get_db_info import get_db, get_project_info
 
 
 current_path = os.path.dirname(__file__)
@@ -27,11 +28,7 @@ class BaseHandler(webapp2.RequestHandler):
 class MainHandler(BaseHandler):
     # con este get recibimos los proyectos de la DB y los mostramos en el INDEX.HTML
     def get(self):
-        db = Save.query().order(Save.start_date).fetch()
-        params = {
-            "projects": db
-        }
-        return self.render_template("index.html", params)
+        return self.render_template("index.html", params=get_db())
 
     def post(self):
         # seleccionamos los valores que cogemos de los input
@@ -44,21 +41,14 @@ class MainHandler(BaseHandler):
         saved = Save(expediente=expediente, code=code, name=name, place=place, status=status, comments=comments)
         saved.put()
 
-        # esto es para cuando introduzcas el nuevo proyecto se vuelva a mostrar
-        db = Save.query().order(Save.start_date).fetch()
-        params = {"message1": "El proyecto ha sido guardado",
-                  "projects": db}
-        return self.render_template("index.html", params)
+        # esto es para cuando introduzcas el nuevo proyecto se vuelva a mostrar y ver que se ha guardado
+        return self.redirect_to("project-list")
 
 
 class ProjectListHandler(BaseHandler):
     # para mostrar la lista de proyectos y elegir uno cuando pulses en info y cambiarlo
     def get(self):
-        db = Save.query().order(Save.start_date).fetch()
-        params = {
-            "projects": db
-        }
-        return self.render_template("project-list.html", params)
+        return self.render_template("project-list.html", params=get_db())
 
     def post(self):
         # quiero que puedas buscar el nombre en la base de datos y te salga en la lista
@@ -75,13 +65,10 @@ class ProjectListHandler(BaseHandler):
 class ProjectInfoHandler(BaseHandler):
     # mostrar la información detallada del proyecto seleccionado
     def get(self, message_id):
-        project_selected = Save.get_by_id(int(message_id))
-        params = {
-            "project": project_selected
-        }
-        return self.render_template("try.html", params)
+        return self.render_template("try.html", params=get_project_info(message_id))
 
     def post(self, message_id):
+        # función borrar proyecto seleccionado
         project_selected = Save.get_by_id(int(message_id))
         project_selected.key.delete()
 
@@ -91,14 +78,10 @@ class ProjectInfoHandler(BaseHandler):
 class ProjectChangerHandler(BaseHandler):
     # mostrar la página con el proyecto seleccionado y los campos para introducir la nueva info
     def get(self, message_id):
-        project_selected = Save.get_by_id(int(message_id))
-        params = {
-            "project": project_selected,
-        }
-        return self.render_template("change-info.html", params)
+        return self.render_template("change-info.html", params=get_project_info(message_id))
 
     def post(self, message_id):
-        # coger la info de los input y mandarla a la db para sobrescribir el proyecto.
+        # coger el proyecto, coger la info de los input, sobrescribir atributos del proyecto y guardar en la DB.
         project_selected = Save.get_by_id(int(message_id))
         project_selected.expediente = self.request.get("expediente")
         project_selected.code = self.request.get("code")
@@ -106,7 +89,7 @@ class ProjectChangerHandler(BaseHandler):
         project_selected.status = self.request.get("status")
         project_selected.comments = self.request.get("comments")
         project_selected.put()
-        # !!(26/11) ERROR - si dejas los campos vacíos se borra la información que estaba antes
+
         params = {
             "answer1": "The project: " + project_selected.name + " has been edited",
             "project": project_selected
