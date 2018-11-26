@@ -2,17 +2,33 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <title>try</title>
 </head>
 <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  		<div class="collapse navbar-collapse row justify-content-md-center" id="navbarNavAltMarkup">
+    		<div class="navbar-nav col-9 justify-content-md-center">
+		      <a class="nav-item nav-link active" href="/">Lista de Proyectos </a>
+		      <a class="nav-item nav-link active" href="/info" target="_blank">Información</a>
+		      <a class="nav-item nav-link active" href="/info">Cambiar Projecto</a>
+		    </div>
+		</div>
+	</nav>
+
     <p>
-        {{ id.name }} <br>
-        {{ id.expediente }} <br>
-        {{ id.code }} <br>
-        {{ id.start_date }} <br>
-        {{ id.place }} <br>
-        {{ id.status }} <br>
-        {{ id.comments }}
+        {{ project.name }} <br>
+        {{ project.expediente }} <br>
+        {{ project.code }} <br>
+        {{ project.start_date }} <br>
+        {{ project.place }} <br>
+        {{ project.status }} <br>
+        {{ project.comments }} <br>
+        {{ project.key.urlsafe() }}
     </p>
+    <form method="get" action="/changeproject/{{ project.key.id() }}/edit">
+        <p> Click here if you want to change this project </p>
+        <button type="submit"></button>
+    </form>
 </body>
 </html>

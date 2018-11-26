@@ -13,32 +13,29 @@
     		<div class="navbar-nav col-9 justify-content-md-center">
 		      <a class="nav-item nav-link active" href="/">Lista de Proyectos </a>
 		      <a class="nav-item nav-link active" href="/info" target="_blank">Información</a>
-		      <a class="nav-item nav-link active" href="/info">Cambiar Projecto</a>
+		      <a class="nav-item nav-link active" href="#">Cambiar Projecto</a>
 		    </div>
 		</div>
 	</nav>
 
 	<div class="container mt-5">
-		<h3>Add a new project</h3>
-		<form method="post" action="/">
+		<h3>You have selected {{project.name}}</h3>
+		<form method="post" action="/changeproject/{{ project.key.id() }}/edit">
 			<div class="row">
 				<div class="col">
-					<input type="text" class="form-control" name="expediente" placeholder="Número de expediente">
+					<input type="text" class="form-control" name="expediente" placeholder="Número expediente ({{project.expediente}})">
 				</div>
                 <!-- Lo dejo comentado por si queremos ponerlo. Ahora mismo está para que se añada automáticamente
 				<div class="col">
 					<input type="text" class="form-control" name="start_date" placeholder="Fecha de inicio">
 		    	</div>-->
 		   	 	<div class="col">
-		      		<input type="text" class="form-control" name="code" placeholder="Código">
+		      		<input type="text" class="form-control" name="code" placeholder="Código ({{project.code}})">
 		    	</div>
 		   	</div>
 			<div class="row mt-3 mb-3">
-				<div class="col">
-		      		<input type="text" class="form-control" name="name" placeholder="Nombre">
-		    	</div>
 		    	<div class="col">
-		      		<input type="text" class="form-control" name="place" placeholder="Ubicación">
+		      		<input type="text" class="form-control" name="place" placeholder="Lugar ({{project.place}})">
 		    	</div>
 		    	<div class="col">
 		      		<select class="form-control" name="status">
@@ -49,38 +46,12 @@
 		  	</div>
 		  	<div class="row mt-3 mb-3">
 		    	<div class="col">
-		      		<input id="comment" type="text" class="form-control" name="comments" placeholder="Comentario">
+		      		<input id="comment" type="text" class="form-control" name="comments" placeholder="Comentario ({{project.comments}})">
 		    	</div>
 		  	</div>
 		  	<button type="submit">Guardar proyecto</button>
 		</form>
-
-		<div class="container mt-3"><!-- este div es auxiliar para mostrar el mensaje de que se ha guardado-->
-			{{message1}}
-		</div>
-	</div>
-
-	<div class="container mt-5 justify-content-md-center col-9">
-		<table class="table table-striped responsive">
-            <thead>
-                <tr>
-                    <th scope="col">Project Name</th>
-                    <th scope="col">Code</th>
-                    <th scope="col">Start_date</th>
-                    <th scope="col">Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for project in projects %} <!--Bucle para añadir cuantas filas necesitemos-->
-                    <tr>
-                        <td> <a href="/info/{{ project.key.id() }}"> {{project.name}}</a> </td>
-                        <td> {{project.code}} </td>
-                        <td> {{project.start_date}} </td>
-                        <td> {{project.status}} </td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-		</table>
+		<p>{{answer1}}</p>
 	</div>
 </body>
 </html>
